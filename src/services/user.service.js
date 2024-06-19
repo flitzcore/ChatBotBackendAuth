@@ -79,6 +79,55 @@ const deleteUserById = async (userId) => {
   return user;
 };
 
+/**
+ * Get Chats by user id
+ * @param {ObjectId} userId
+ * @param {List} options
+ * @returns {Promise<Object>}
+ */
+const getChat = async (userId, options) => {
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  const { limit = 10, page = 1 } = options;
+  const skip = (page - 1) * limit;
+  const messages = user.messages.slice(skip, skip + limit);
+
+  return {
+    totalPages: Math.ceil(user.messages.length / limit),
+    currentPage: page,
+    messages,
+  };
+};
+const postChat = async (userId, chatBody) => {
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  const chatBotMsg = {
+    id: Date.now(),
+    name: 'Chat bot',
+    message: chatBody.chatBotMsg,
+  };
+
+  const userMsg = {
+    id: Date.now() + 1, // Ensuring unique id for user message
+    name: user.name,
+    message: chatBody.userMsg,
+  };
+
+  // Adding the new messages at the beginning of the messages array
+  user.messages.unshift(userMsg);
+  user.messages.unshift(chatBotMsg);
+
+  console.log(user.messages);
+  await user.save();
+
+  return;
+};
 module.exports = {
   createUser,
   queryUsers,
@@ -86,4 +135,6 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  getChat,
+  postChat,
 };

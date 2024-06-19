@@ -44,11 +44,25 @@ const deleteUser = {
     userId: Joi.string().custom(objectId),
   }),
 };
-
+const getChat = {
+  params: Joi.object().keys({
+    userId: Joi.string().custom(objectId),
+    limit: Joi.number().integer(),
+    page: Joi.number().integer(),
+  }),
+};
+const postChat = {
+  body: Joi.object().keys({
+    chatBotMsg: Joi.string().required(),
+    userMsg: Joi.string().required(),
+  }),
+};
 module.exports = {
   createUser,
   getUsers,
   getUser,
   updateUser,
   deleteUser,
+  getChat,
+  postChat,
 };

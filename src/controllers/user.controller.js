@@ -33,11 +33,24 @@ const deleteUser = catchAsync(async (req, res) => {
   await userService.deleteUserById(req.params.userId);
   res.status(httpStatus.NO_CONTENT).send();
 });
-
+const getChat = catchAsync(async (req, res) => {
+  const options = pick(req.query, ['limit', 'page']);
+  const chat = await userService.getChat(req.params.userId, options);
+  if (!chat) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Chat not found');
+  }
+  res.send(chat);
+});
+const postChat = catchAsync(async (req, res) => {
+  await userService.postChat(req.params.userId, req.body);
+  res.status(httpStatus.CREATED).send();
+});
 module.exports = {
   createUser,
   getUsers,
   getUser,
   updateUser,
   deleteUser,
+  getChat,
+  postChat,
 };

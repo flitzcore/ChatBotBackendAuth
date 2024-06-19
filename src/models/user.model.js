@@ -44,23 +44,26 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    messages: [
-      {
-        id: {
-          type: Number,
-          default: () => Date.now(),
-          required: true,
+    messages: {
+      type: [
+        {
+          name: {
+            type: String,
+            required: true,
+          },
+          message: {
+            type: String,
+            required: true,
+          },
         },
-        name: {
-          type: String,
-          required: true,
+      ],
+      default: [
+        {
+          name: 'Chat bot',
+          message: 'Hi! Aku Coral, AI Chatbot yang akan membantu kamu dalam masalah perkapalan. Apa yang bisa aku bantu?',
         },
-        message: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
+      ],
+    },
   },
   {
     timestamps: true,
