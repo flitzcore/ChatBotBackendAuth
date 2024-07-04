@@ -13,7 +13,6 @@ const userSchema = mongoose.Schema(
     },
     avatar: {
       type: String,
-      required: true,
       default: '/LoggedInUser.jpg',
     },
     email: {
