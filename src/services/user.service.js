@@ -120,8 +120,8 @@ const postChat = async (userId, chatBody) => {
   };
 
   // Adding the new messages at the beginning of the messages array
-  user.messages.unshift(userMsg);
-  user.messages.unshift(chatBotMsg);
+  user.messages.push(chatBotMsg);
+  user.messages.push(userMsg);
 
   console.log(user.messages);
   await user.save();
