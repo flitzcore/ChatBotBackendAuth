@@ -111,12 +111,14 @@ const postChat = async (userId, chatBody) => {
     id: Date.now(),
     name: 'Chat bot',
     message: chatBody.chatBotMsg,
+    avatar: '/User1.ico',
   };
 
   const userMsg = {
     id: Date.now() + 1, // Ensuring unique id for user message
     name: user.name,
     message: chatBody.userMsg,
+    avatar: '/LoggedInUser.jpg',
   };
 
   // Adding the new messages at the beginning of the messages array
