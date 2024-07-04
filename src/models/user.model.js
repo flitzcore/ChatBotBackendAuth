@@ -11,6 +11,11 @@ const userSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
+    avatar: {
+      type: String,
+      required: true,
+      default: '/LoggedInUser.jpg',
+    },
     email: {
       type: String,
       required: true,
@@ -55,12 +60,17 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true,
           },
+          avatar: {
+            type: String,
+            required: true,
+          },
         },
       ],
       default: [
         {
           name: 'Chat bot',
           message: 'Hi! Aku Coral, AI Chatbot yang akan membantu kamu dalam masalah perkapalan. Apa yang bisa aku bantu?',
+          avatar: '/User1.ico',
         },
       ],
     },
